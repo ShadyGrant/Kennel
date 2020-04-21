@@ -7,6 +7,14 @@ import Customer from "./customers/Customer"
 import "./customers/Customer.css"
 import Location from "./locations/Location"
 import "./locations/Location.css"
+import LocationList from "./locations/LocationList"
+import { LocationProvider } from "./locations/LocationProvider"
+import AnimalList from "./animal/AnimalList"
+import { AnimalProvider } from "./animal/AnimalProvider"
+import EmployeeList from "./employees/EmployeeList"
+import { EmployeeProvider } from "./employees/EmployeeProvider"
+import CustomerList from "./customers/CustomerList"
+import { CustomerProvider } from "./customers/CustomerProvider"
 
 
 export default () => (
@@ -20,31 +28,24 @@ export default () => (
         </address>
 
         <h2>Animals</h2>
-        <article className="animals">
-            <Animal />
-            <Animal />
-            <Animal />
-        </article>
+           <AnimalProvider>
+               <AnimalList />
+           </AnimalProvider>
 
         <h2>Employees</h2>
-        <article className="employees">
-            <Employee />
-            <Employee />
-            <Employee />
-        </article>
+            <EmployeeProvider>
+                <EmployeeList />
+            </EmployeeProvider>
 
         <h2>Customers</h2>
-        <article className="customers">
-            <Customer />
-            <Customer />
-            <Customer />
-            <Customer />
-        </article>
+           <CustomerProvider>
+               <CustomerList />
+           </CustomerProvider>
 
         <h2>Locations</h2>
-        <article className="locations">
-            <Location />
-            <Location />
-        </article>
+            <LocationProvider>
+                <LocationList />
+            </LocationProvider>
+       
     </>
 )
