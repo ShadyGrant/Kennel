@@ -29,12 +29,19 @@ export default () => (
 
         <h2>Animals</h2>
            <AnimalProvider>
-               <AnimalList />
+               <LocationProvider>
+                   <CustomerProvider>
+                       <AnimalList />
+                   </CustomerProvider>
+               </LocationProvider>
+               
            </AnimalProvider>
 
-        <h2>Employees</h2>
+        {/* <h2>Employees</h2> */}
             <EmployeeProvider>
-                <EmployeeList />
+               <LocationProvider>
+                   <EmployeeList />>
+               </LocationProvider>
             </EmployeeProvider>
 
         <h2>Customers</h2>
