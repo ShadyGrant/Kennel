@@ -1,58 +1,41 @@
-import React from "react"
-import Animal from "./animal/Animal"
-import "./animal/Animal.css"
-import Employee from "./employees/Employee"
-import "./employees/Employee.css"
-import Customer from "./customers/Customer"
-import "./customers/Customer.css"
-import Location from "./locations/Location"
-import "./locations/Location.css"
-import LocationList from "./locations/LocationList"
+import React, { useState } from "react"
 import { LocationProvider } from "./locations/LocationProvider"
-import AnimalList from "./animal/AnimalList"
-import { AnimalProvider } from "./animal/AnimalProvider"
-import EmployeeList from "./employees/EmployeeList"
+import LocationList from "./locations/LocationList"
 import { EmployeeProvider } from "./employees/EmployeeProvider"
-import CustomerList from "./customers/CustomerList"
+import EmployeeList from "./employees/EmployeeList"
+import { AnimalProvider } from "./animal/AnimalProvider"
+import AnimalList from "./animal/AnimalList"
 import { CustomerProvider } from "./customers/CustomerProvider"
-import "./Kennel.css"
+import CustomerList from "./customers/CustomerList"
+import { SearchBar } from "./search/SearchBar"
+import { SearchResults } from "./search/SearchResults"
+import "./Layout.css"
 
-export default () => (
-    <>
-        <h2>Nashville Kennels</h2>
-        <small>Loving care when you're not there.</small>
+export default () => {
+    const [searchTerms, setTerms] = useState(null)
 
-        <address>
-            <div>Visit Us at the Nashville North Location</div>
-            <div>500 Puppy Way</div>
-        </address>
-
-        <h2>Animals</h2>
-           <AnimalProvider>
-               <LocationProvider>
-                   <CustomerProvider>
-                       <AnimalList />
-                   </CustomerProvider>
-               </LocationProvider>
-               
-           </AnimalProvider>
-
-        {/* <h2>Employees</h2> */}
-            <EmployeeProvider>
-               <LocationProvider>
-                   <EmployeeList />>
-               </LocationProvider>
-            </EmployeeProvider>
-
-        <h2>Customers</h2>
-           <CustomerProvider>
-               <CustomerList />
-           </CustomerProvider>
-
-        <h2>Locations</h2>
-            <LocationProvider>
-                <LocationList />
-            </LocationProvider>
-       
-    </>
-)
+    return (
+        <div className="mainContainer">
+            <AnimalProvider>
+                <CustomerProvider>
+                    <EmployeeProvider>
+                        <LocationProvider>
+                            <div className="searchContainer">
+                                <SearchBar setTerms={setTerms} />
+                                <SearchResults searchTerms={searchTerms} />
+                            </div>
+                            <div className="dataContainer">
+                                <h2>Nashville Kennels</h2>
+                                <small>Loving care when you're not there.</small>
+                                <LocationList />
+                                <AnimalList />
+                                <CustomerList />
+                                <EmployeeList />
+                            </div>
+                        </LocationProvider>
+                    </EmployeeProvider>
+                </CustomerProvider>
+            </AnimalProvider>
+        </div>
+    )
+}

@@ -7,10 +7,16 @@ export default () => {
     const { customers } = useContext(CustomerContext)
 
     return (
-        <div className="customers">
-        {
-            customers.map(cus => <Customer key={cus.id} customer={cus} />)
-        }
-        </div>
+        <>
+            <h2>Customers</h2>
+
+            <ul className="customers">
+                {
+                    customers.map(customer => {
+                        return <Customer key={customer.id} customer={customer} />
+                    })
+                }
+            </ul>
+        </>
     )
 }
