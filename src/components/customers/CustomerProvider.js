@@ -30,16 +30,12 @@ export const CustomerProvider = (props) => {
     }
 
     /*
-        Load all customers when the component is mounted. Ensure that
+        Load all animals when the component is mounted. Ensure that
         an empty array is the second argument to avoid infinite loop.
     */
     useEffect(() => {
         getCustomers()
     }, [])
-
-    useEffect(() => {
-        console.log("****  Customer APPLICATION STATE CHANGED  ****")
-    }, [customers])
 
     return (
         <CustomerContext.Provider value={{

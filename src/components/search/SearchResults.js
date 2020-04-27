@@ -1,9 +1,31 @@
 import React, { useState, useContext, useEffect } from "react"
 import { AnimalContext } from "../animal/AnimalProvider"
+import { Animal } from "../animal/Animal"
+import { CustomerContext } from "../customers/CustomerProvider"
+import { LocationContext } from "../locations/LocationProvider"
+import { Modal, ModalHeader, ModalBody, Button, ModalFooter } from "reactstrap"
+import { EditAnimalForm } from "../animal/EditAnimalForm"
+
 
 export const SearchResults = ({ searchTerms }) => {
-    const { animals } = useContext(AnimalContext)
-    const [ filteredAnimals, setFiltered ] = useState([])
+    const { animals, releaseAnimal } = useContext(AnimalContext)
+    const { customers } = useContext(CustomerContext)
+    const { locations } = useContext(LocationContext)
+
+    const [filteredAnimals, setFiltered] = useState([])
+    const [selectedAnimal, setAnimal] = useState({
+        animal: {},
+        location: null,
+        customer: null
+    })
+
+    // Toggle details modal
+    const [modal, setModal] = useState(false)
+    const toggle = () => setModal(!modal)
+
+    // Toggle edit modal
+    const [editModal, setEditModal] = useState(false)
+    const toggleEdit = () => setEditModal(!editModal)
 
     useEffect(() => {
         if (searchTerms !== "") {
@@ -19,9 +41,46 @@ export const SearchResults = ({ searchTerms }) => {
             <h3>Results</h3>
             <div className="animals">
                 {
-                    filteredAnimals.map(animal => <div key={ animal.id }>{ animal.name }</div>)
+                    filteredAnimals.map(animal => <div
+                        className="fakeLink href"
+                        onClick={() => {
+                            const location = locations.find(l => l.id === animal.locationId)
+                            const customer = customers.find(c => c.id === animal.customerId)
+
+                            setAnimal({ animal, location, customer })
+                            toggle()
+                        }}
+                    >{animal.name}</div>)
                 }
             </div>
+
+            <Modal isOpen={editModal} toggle={toggleEdit}>
+                <ModalHeader toggle={toggleEdit}>
+                    {selectedAnimal.animal.name}
+                </ModalHeader>
+                <ModalBody>
+                    <EditAnimalForm key={selectedAnimal.animal.id} toggleEdit={toggleEdit} {...selectedAnimal} />
+                </ModalBody>
+            </Modal>
+
+            <Modal isOpen={modal} toggle={toggle}>
+                <ModalHeader toggle={toggle}>
+                    {selectedAnimal.animal.name}
+                </ModalHeader>
+                <ModalBody>
+                    <Animal key={selectedAnimal.animal.id} {...selectedAnimal} />
+                </ModalBody>
+                <ModalFooter>
+                    <Button color="info" onClick={() => {
+                        toggle()
+                        toggleEdit()
+                    }}>Edit</Button>
+                    <Button color="danger" onClick={() => {
+                        releaseAnimal(selectedAnimal.animal.id)
+                        toggle()
+                    }}>Delete</Button>
+                </ModalFooter>
+            </Modal>
         </div>
     )
 }

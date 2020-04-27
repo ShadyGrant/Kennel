@@ -13,7 +13,7 @@ export default props => {
     const constructNewAnimal = () => {
         const locationId = parseInt(location.current.value)
         const userId = parseInt(localStorage.getItem("kennel_customer"))
-        // create a new animal object  
+        // create a new animal object
         // Make sure that the animal object has the customerId and locationId foreign keys on it.
         const newAnimalObj = {
             name: name.current.value,

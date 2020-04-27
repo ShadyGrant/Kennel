@@ -12,7 +12,6 @@ export const SearchBar = ({ setTerms }) => {
                     type="text"
                     id="searchTerms"
                     ref={terms}
-                    required
                     autoFocus
                     className="form-control"
                 />
